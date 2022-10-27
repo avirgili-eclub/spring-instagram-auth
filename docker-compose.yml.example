@@ -1,0 +1,51 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:12.9-alpine
+    hostname: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=virtech_polacore
+    networks:
+      - eclub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    hostname: app
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - DATASOURCE_PASSWORD=postgres
+      - DATASOURCE_URL=jdbc:postgresql://postgres:5432/virtech_polacore
+      - DATASOURCE_USERNAME=postgres
+      - JPA_HIBERNATE_DDL_AUTO=update
+    build:
+      context: .
+      args:
+        - "github_actor=avirgili-eclub"
+        - "github_token=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"
+      dockerfile: Dockerfile
+    networks:
+      - eclub
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./.docker-data/logs:/home/spring/logs
+    env_file:
+      - .env
+networks:
+  virtech:
+volumes:
+  postgres-data:

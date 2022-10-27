@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title th:remove="all">Template for HTML email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <em>El cobro no se pudo realizar. Detalle de informe de error</em></p>
+<p>
+    <strong>id: </strong><span th:text="${id}"></span><br/>
+    <strong>NRO REFERENCIA: </strong><span th:text="${nroReferenciaMov}"></span><br/>
+    <strong>ESTADO SOLICITUD: </strong><span th:text="${solChargeState}"></span><br/>
+    <strong>MONTO: </strong><span th:text="${amount}"></span><br/>
+    <strong>CONTADOR DE REPROCESO: </strong><span th:text="${solChargeAttempts}"></span><br/>
+    <strong>CREADO EL: </strong><span th:text="${createdAt}"></span><br/>
+<div style="color:red">
+    <strong>DETALLE DEL ERROR</strong><br/><br/>
+    <strong>ESTADO DEL COBRO: </strong><span th:text="${chargeState}"></span><br/>
+    <strong>MSG ERROR: </strong><span th:text="${msgError}"></span><br/>
+    <strong>ACTUALIZADO EL: </strong><span th:text="${lastModified}"></span><br/>
+</div>
+</p>
+<br/>
+<p>
+    Este e-mail ha sido generado de manera automatica
+</p>
+</body>
+</html>

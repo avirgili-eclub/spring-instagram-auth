@@ -1,0 +1,72 @@
+server:
+  port: 8086
+
+debug: true
+
+logging:
+  level:
+    root: DEBUG
+    virtech.com.polacore: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+
+configuration:
+  environment: Ambiente de Desarrollo
+  noreply-mail: avirgilitech@gmail.com.py
+
+app:
+  amqp:
+    rabbitmq:
+
+spring:
+  application:
+    name: demo-app-ig
+  main:
+    allow-bean-definition-overriding: true
+  rabbitmq:
+#    host: ${SPRING_RABBITMQ_HOST:10.150.10.81}
+#    port: ${SPRING_RABBITMQ_PORT:5672}
+#    username: ${SPRING_RABBITMQ_USERNAME:admin}
+#    password: ${SPRING_RABBITMQ_PASSWORD:asdasd123}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/polabd
+    username: postgres
+    password: admin
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+
+# feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 25000
+        readTimeout: 12000
+        loggerLevel: FULL
+
+cron:
+  expression: "0 */2 * ? * *"
+
+api:
+  instagram:
+    client-id: 417247543918662
+    redirect-uri: http://localhost:8087
+    scope: user_profile,user_media
+    response-type: code
+    url: https://api.instagram.com
+
+springdoc:
+  packagesToScan: virtech.com.polacore
+  pathsToMatch: /api/v1/polacore, /v1, /api/v1/**
